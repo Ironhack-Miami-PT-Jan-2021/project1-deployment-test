@@ -5,12 +5,28 @@ class Dinosaur {
     this.height = 50;
     this.width = 50;
     this.img = new Image();
-    this.img.src = "./dino.png";
+    this.i = 0;
+    this.j = 0;
+    this.columns = 5;
+    this.picWidth = 160;
+    this.widthOfASignlePic = this.picWidth/this.columns;
+    this.k = 0;
+    this.rows = 9;
+    this.picHeight = 288;
+    this.heightOfASignlePic = this.picHeight/this.rows;
+    this.img.src = 'https://raw.githubusercontent.com/mozilla/BrowserQuest/master/client/img/1/clotharmor.png';
+    // "./dino.png";
   }
 
   draw() {
+    this.i++;
+    if(this.i >= this.columns * 5) { this.i = 0}
     ctx.drawImage(
       this.img,
+      Math.floor(this.i/5) * this.widthOfASignlePic,
+      this.j * this.heightOfASignlePic,
+      this.widthOfASignlePic,
+      this.heightOfASignlePic,
       this.currentX,
       this.currentY,
       this.width,
@@ -29,13 +45,25 @@ class Dinosaur {
 
   move(speed) {
     if (this.safeFromEdges(speed)) {
-      if (currentGame.activeDirections.right) this.currentX += speed;
+      if (currentGame.activeDirections.right) {
+        this.j = 0;
+        this.columns = 5;
+        this.currentY += speed;
+      }
 
       if (currentGame.activeDirections.left) this.currentX -= speed;
 
-      if (currentGame.activeDirections.down) this.currentY += speed;
+      if (currentGame.activeDirections.down) {
+          this.j = 7;
+          this.columns = 4;
+          this.currentY += speed;
+        }
 
-      if (currentGame.activeDirections.up) this.currentY -= speed;
+      if (currentGame.activeDirections.up) {
+        this.j = 3;
+        this.columns = 5;
+        this.currentY -= speed;
+      }
     }
   }
 }
